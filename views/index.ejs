@@ -10,39 +10,44 @@
 <body>
     <h1 class="display-4 text-center">Book Notes</h1>
     <h2 class="display-6 text-end mx-5">
-        <%= currentDay %>, <%= currentMonth %> <%= currentDate %>
+        <%= date %>
     </h2>
     <form action="/add-note" method="post" class="text-center">
         <button class="btn btn-primary mx-3" type="submit">New Book Note</button>
     </form>
     <% if (notes.length !== 0) { %>
-    <% notes.slice().reverse().forEach(note => { %>
-        <hr>
-        <div class="note">
-            <div class="book-title">
-                <%= note.book_name %>
-                <hr>
+        <% notes.slice().reverse().forEach(note => { %>
+            <hr>
+            <div class="note">
+                <div class="note-image">
+                    <img src="https://covers.openlibrary.org/b/olid/<%= note.olid %>-M.jpg" alt="Book Cover" class="float-end">
+                </div>
+                <div class="note-text">
+                    <div class="book-title display-6 fw-medium">
+                        <%= note.book_name %>
+                    <hr>
+                    </div>
+                    <div class="book-note">
+                        <%= note.book_note %>
+                    </div>
+                    <div class="date-added">
+                        <p>
+                            Last updated: <%= note.date_added %>
+                        </p>
+                    </div>
+                    <div class="buttons">
+                        <form action="/edit" method="post" class="mx-3">
+                            <input type="hidden" name="noteId" value="<%= note.id %>">
+                            <button type="submit" class="btn btn-secondary">Edit</button>
+                        </form>
+                        <form action="/delete" method="post" class="mx-3">
+                            <input type="hidden" name="noteId" value="<%= note.id %>">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="book-note">
-                <%= note.book_note %>
-            </div>
-            <div class="date-added">
-                <p>
-                    Date last updated: <%= note.date_added %>
-                </p>
-            </div>
-            <div class="buttons">
-                <form action="/edit" method="post" class="mx-3">
-                    <input type="hidden" name="noteId" value="<%= note.id %>">
-                    <button type="submit" class="btn btn-secondary">Edit</button>
-                </form>
-                <form action="/delete" method="post" class="mx-3">
-                    <input type="hidden" name="noteId" value="<%= note.id %>">
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-            </div>
-        </div>
-    <% }); %> 
+        <% }); %> 
     <% } else { %>
         <h2 class="display-6 m-5">No notes added</h2>
     <% } %>

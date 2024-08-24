@@ -20,21 +20,13 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 app.get("/", async (req, res) => {
-    const currentTime = new Date();
-    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    const day = currentTime.getDay();
-    const month = currentTime.getMonth();
-    const date = currentTime.getDate();
     let notes = [];
     const result = await db.query("SELECT * FROM booknotes")
-    result.rows.forEach((note) => {
+    result.rows.forEach(async (note) => {
         notes.push(note);
     });
     res.render("index.ejs", {
-        currentDay: days[day],
-        currentMonth: months[month],
-        currentDate: date,
+        date: getTodaysDate(),
         notes: notes
     });
 });
@@ -59,7 +51,9 @@ app.post("/note-added", async (req, res) => {
     const title = req.body["book-title"];
     const note = req.body["book-note"];
     const date = req.body["date"]
-    await db.query("INSERT INTO booknotes (book_name, book_note, date_added) VALUES ($1, $2, $3)", [title, note, date]);
+    const result = await axios.get(`https://openlibrary.org/search.json?title=${title}`)
+    const olid = result.data.docs[0].cover_edition_key;
+    await db.query("INSERT INTO booknotes (book_name, book_note, date_added, olid) VALUES ($1, $2, $3, $4)", [title, note, date, olid]);
     res.redirect("/");
 });
 
