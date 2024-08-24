@@ -53,7 +53,8 @@ app.post("/note-added", async (req, res) => {
     const date = req.body["date"]
     const result = await axios.get(`https://openlibrary.org/search.json?title=${title}`)
     const olid = result.data.docs[0].cover_edition_key;
-    await db.query("INSERT INTO booknotes (book_name, book_note, date_added, olid) VALUES ($1, $2, $3, $4)", [title, note, date, olid]);
+    const author = result.data.docs[0].author_name[0];
+    await db.query("INSERT INTO booknotes (book_name, book_note, date_added, olid, author) VALUES ($1, $2, $3, $4, $5)", [title, note, date, olid, author]);
     res.redirect("/");
 });
 
