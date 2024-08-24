@@ -8,14 +8,15 @@
     <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-    <h1 class="display-4 text-center">Add a new note</h1>
+    <h1 class="display-4 text-center">Edit the note</h1>
     <h2 class="display-6 text-end mx-5">
         <%= date %>
     </h2>
-    <form action="/note-added" method="post" class="form">
-        <input type="text" name="book-title" id="book-title" placeholder="Title of the book" class="m-4">
-        <textarea name="book-note" id="book-note" cols="60" rows="10" placeholder="Note about the book" class="m-4"></textarea>
-        <input type="hidden" name="date" value="<%= date %>">
+    <form action="/note-edited" method="post" class="form">
+        <input type="text" name="new-book-title" id="book-title" placeholder="Title of the book" class="m-4" value="<%= note.book_name %>">
+        <textarea name="new-book-note" id="book-note" cols="60" rows="10" placeholder="Note about the book" class="m-4"><%= note.book_note %></textarea>
+        <input type="hidden" name="new-date" value="<%= date %>">
+        <input type="hidden" name="noteId" value="<%= id %>">
         <button class="btn btn-primary m-3" type="submit" class="m-4">Submit</button>
     </form>
 </body>

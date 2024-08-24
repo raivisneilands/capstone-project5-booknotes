@@ -39,17 +39,19 @@ app.get("/", async (req, res) => {
     });
 });
 
-app.post("/add-note", (req, res) => {
+function getTodaysDate(){
     const currentTime = new Date();
     const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const day = currentTime.getDay();
     const month = currentTime.getMonth();
     const date = currentTime.getDate();
+    return `${days[day]}, ${months[month]} ${date}`;
+}
+
+app.post("/add-note", (req, res) => {
     res.render("new-note.ejs", {
-        currentDay: days[day],
-        currentMonth: months[month],
-        currentDate: date
+        date: getTodaysDate()
     });
 });
 
@@ -64,6 +66,25 @@ app.post("/note-added", async (req, res) => {
 app.post("/delete", async (req, res) => {
     const id = req.body["noteId"];
     await db.query("DELETE FROM booknotes WHERE id = $1", [id]);
+    res.redirect("/");
+});
+
+app.post("/edit", async (req, res) => {
+    const id = req.body["noteId"];
+    const note = await db.query("SELECT * FROM booknotes WHERE id = ($1)", [id]);
+    res.render("edit-note.ejs", {
+        note: note.rows[0],
+        date: getTodaysDate(),
+        id: id
+    })
+});
+
+app.post("/note-edited", async (req, res) => {
+    const newTitle = req.body["new-book-title"];
+    const newNote = req.body["new-book-note"];
+    const newDate = req.body["new-date"];
+    const id = req.body["noteId"]
+    await db.query("UPDATE booknotes SET book_name = $1, book_note = $2, date_added = $3 WHERE id = $4", [newTitle, newNote, newDate, id]);
     res.redirect("/");
 });
 
