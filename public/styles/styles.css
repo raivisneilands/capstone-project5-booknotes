@@ -1,0 +1,18 @@
+h1{
+    color: rebeccapurple;
+}
+.form{
+    display: flex;
+    flex-direction: column;
+}
+.note{
+    display: flex;
+    flex-direction: column;
+}
+.note > div{
+    margin: 20px;
+}
+.date-added{
+    color: lightgrey;
+    font-weight: lighter;
+}

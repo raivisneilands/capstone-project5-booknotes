@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "axios": "^1.7.4",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "nodemon": "^3.1.4",
@@ -8,7 +9,6 @@
   "name": "capstone-project5-booknotes",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
