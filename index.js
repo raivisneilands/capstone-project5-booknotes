@@ -28,7 +28,6 @@ app.get("/", async (req, res) => {
     const date = currentTime.getDate();
     let notes = [];
     const result = await db.query("SELECT * FROM booknotes")
-    console.log(result.rows)
     result.rows.forEach((note) => {
         notes.push(note);
     });
@@ -59,6 +58,12 @@ app.post("/note-added", async (req, res) => {
     const note = req.body["book-note"];
     const date = req.body["date"]
     await db.query("INSERT INTO booknotes (book_name, book_note, date_added) VALUES ($1, $2, $3)", [title, note, date]);
+    res.redirect("/");
+});
+
+app.post("/delete", async (req, res) => {
+    const id = req.body["noteId"];
+    await db.query("DELETE FROM booknotes WHERE id = $1", [id]);
     res.redirect("/");
 });
 
