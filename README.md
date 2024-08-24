@@ -97,8 +97,8 @@ Before you begin, ensure you have met the following requirements:
 
 ## Acknowledgments
 
-- Express.js for providing a robust web framework.
-- Axios for making HTTP requests to the Open Library API.
-- PostgreSQL for database management.
-- Open Library API for book information.
+- [Express.js](https://expressjs.com) for providing a robust web framework.
+- [Axios](https://axios-http.com/docs/api_intro) for making HTTP requests to the Open Library API.
+- [PostgreSQL](https://www.postgresql.org) for database management.
+- [Open Library](https://openlibrary.org/developers/api) API for book information.
 
