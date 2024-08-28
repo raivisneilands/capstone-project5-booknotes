@@ -89,7 +89,7 @@ Before you begin, ensure you have met the following requirements:
     id SERIAL PRIMARY KEY,
     book_name VARCHAR(255),
     book_note TEXT,
-    date_added DATE,
+    date_added TEXT,
     olid VARCHAR(50),
     author VARCHAR(255)
   );
